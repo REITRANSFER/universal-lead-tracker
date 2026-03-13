@@ -1,7 +1,6 @@
 import { verifySession } from '@/lib/session'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { AppSidebar, SidebarTrigger } from '@/components/app-sidebar'
-import { SessionExpiryModal } from '@/components/session-expiry-modal'
 import { Separator } from '@/components/ui/separator'
 
 export default async function DashboardLayout({
@@ -10,7 +9,7 @@ export default async function DashboardLayout({
   children: React.ReactNode
 }) {
   // Gate 2: independent server-side session verification (CVE-2025-29927 mitigation)
-  const { expiresAt } = await verifySession()
+  await verifySession()
 
   return (
     <SidebarProvider>
@@ -22,7 +21,6 @@ export default async function DashboardLayout({
         </header>
         <div className="flex-1 p-6">{children}</div>
       </main>
-      <SessionExpiryModal expiresAt={expiresAt} />
     </SidebarProvider>
   )
 }
