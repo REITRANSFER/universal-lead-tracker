@@ -13,11 +13,14 @@ export function SessionExpiryModal({ expiresAt }: { expiresAt: number }) {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    // expiresAt is a unix timestamp in seconds from JWT exp claim
+    if (!expiresAt || expiresAt <= 0) return
+
     const msUntilExpiry = expiresAt * 1000 - Date.now()
-    if (msUntilExpiry <= 0) {
-      setExpired(true)
-      return
-    }
+
+    // If more than 31 days away or negative (clock skew), skip
+    if (msUntilExpiry < 0 || msUntilExpiry > 31 * 24 * 60 * 60 * 1000) return
+
     const timer = setTimeout(() => setExpired(true), msUntilExpiry)
     return () => clearTimeout(timer)
   }, [expiresAt])
