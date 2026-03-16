@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Quicksand, JetBrains_Mono } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
 
 const quicksand = Quicksand({
@@ -28,7 +29,9 @@ export default function RootLayout({
       <body
         className={`${quicksand.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        <TooltipProvider>{children}</TooltipProvider>
+        <NuqsAdapter>
+          <TooltipProvider>{children}</TooltipProvider>
+        </NuqsAdapter>
       </body>
     </html>
   );
