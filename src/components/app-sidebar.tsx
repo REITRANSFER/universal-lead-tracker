@@ -7,6 +7,7 @@ import {
   Target,
   LogOut,
   TrendingUp,
+  BarChart2,
 } from 'lucide-react'
 import {
   Sidebar,
@@ -27,6 +28,7 @@ const navItems = [
   { title: 'Dashboard', href: '/', icon: LayoutDashboard },
   { title: 'Leads', href: '/leads', icon: Target },
   { title: 'Clients', href: '/clients', icon: Users },
+  { title: 'Analytics', href: '/analytics', icon: BarChart2 },
 ]
 
 export function AppSidebar() {
