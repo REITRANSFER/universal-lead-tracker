@@ -164,3 +164,9 @@
     @apply font-sans;
   }
 }
+
+/* Vaul drawer overlay blur */
+[data-vaul-overlay] {
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+}
