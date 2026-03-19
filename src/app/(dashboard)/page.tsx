@@ -78,34 +78,51 @@ export default function DashboardPage() {
       <FloatingOrbs />
 
       <StaggerContainer className="space-y-6 relative z-10">
+        {/* Hero Banner */}
         <StaggerItem>
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <div className="flex items-center gap-3">
-                <h1 className="text-3xl font-bold tracking-tight page-header-accent">Dashboard</h1>
-                <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-green-500/10 border border-green-500/20">
-                  <span className="live-dot" />
-                  <span className="text-xs font-medium text-green-400">Live</span>
+          <div className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#0d0d0d] via-[#111] to-[#0d0d0d]">
+            {/* Gradient mesh blobs */}
+            <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-primary/[0.07] blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-16 -left-16 w-48 h-48 rounded-full bg-[#0693e3]/[0.05] blur-3xl pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-32 rounded-full bg-[#9b51e0]/[0.03] blur-3xl pointer-events-none" />
+
+            <div className="relative px-6 py-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-4">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://reitransfer.com/wp-content/uploads/2024/09/reitransfer-logo_square.png"
+                  alt="REI Transfer"
+                  className="h-12 w-12 rounded-xl glow-red-sm hidden sm:block"
+                />
+                <div>
+                  <div className="flex items-center gap-3">
+                    <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{getGreeting()}</h1>
+                    <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-green-500/10 border border-green-500/20">
+                      <span className="live-dot" />
+                      <span className="text-xs font-medium text-green-400">Live</span>
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    <span className="bg-gradient-to-r from-[#0693e3] to-[#9b51e0] bg-clip-text text-transparent font-medium">REI Transfer</span>
+                    {' '}— Lead Pipeline Overview
+                  </p>
                 </div>
               </div>
-              <p className="text-sm text-muted-foreground mt-2">
-                {getGreeting()}. Here is your lead pipeline overview.
-              </p>
-            </div>
-            <div className="flex items-center gap-1 rounded-full border border-white/10 p-1 bg-white/5 w-fit">
-              {PRESETS.map((p) => (
-                <button
-                  key={p.value}
-                  onClick={() => setPreset(p.value)}
-                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
-                    preset === p.value
-                      ? 'bg-primary text-primary-foreground btn-glow'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
-                  }`}
-                >
-                  {p.label}
-                </button>
-              ))}
+              <div className="flex items-center gap-1 rounded-full border border-white/10 p-1 bg-white/5 w-fit">
+                {PRESETS.map((p) => (
+                  <button
+                    key={p.value}
+                    onClick={() => setPreset(p.value)}
+                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                      preset === p.value
+                        ? 'bg-primary text-primary-foreground btn-glow'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
+                    }`}
+                  >
+                    {p.label}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </StaggerItem>

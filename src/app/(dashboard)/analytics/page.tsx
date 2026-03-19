@@ -38,11 +38,13 @@ export default function AnalyticsPage() {
 
   return (
     <StaggerContainer className="space-y-6">
-      {/* Page header */}
+      {/* Page header with gradient banner */}
       <StaggerItem>
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight page-header-accent">Analytics</h1>
-          <p className="text-muted-foreground mt-1">
+        <div className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#0d0d0d] via-[#111] to-[#0d0d0d] px-6 py-5">
+          <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-[#0693e3]/[0.06] blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-12 -left-12 w-36 h-36 rounded-full bg-[#9b51e0]/[0.04] blur-3xl pointer-events-none" />
+          <h1 className="text-3xl font-bold tracking-tight relative">Analytics</h1>
+          <p className="text-muted-foreground mt-1 relative">
             {loading ? 'Loading...' : 'Lead volume, client breakdown, and attribution'}
           </p>
         </div>

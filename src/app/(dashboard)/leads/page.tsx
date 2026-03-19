@@ -144,21 +144,25 @@ export default function LeadsPage() {
 
   return (
     <StaggerContainer className="space-y-6">
-      {/* Page header */}
+      {/* Page header with gradient banner */}
       <StaggerItem>
-        <div className="flex items-baseline gap-3">
-          <h1 className="text-3xl font-bold tracking-tight page-header-accent">Leads</h1>
-          {!loading && total > 0 && (
-            <span className="text-2xl font-bold text-primary tabular-nums">
-              <AnimatedCounter value={total} className="" />
-            </span>
-          )}
+        <div className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#0d0d0d] via-[#111] to-[#0d0d0d] px-6 py-5">
+          <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-primary/[0.06] blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-12 -left-12 w-36 h-36 rounded-full bg-[#0693e3]/[0.04] blur-3xl pointer-events-none" />
+          <div className="relative flex items-baseline gap-3">
+            <h1 className="text-3xl font-bold tracking-tight">Leads</h1>
+            {!loading && total > 0 && (
+              <span className="text-2xl font-bold text-primary tabular-nums">
+                <AnimatedCounter value={total} className="" />
+              </span>
+            )}
+          </div>
+          <p className="text-muted-foreground mt-1 relative">
+            {loading && leads.length === 0
+              ? 'Loading...'
+              : `${total.toLocaleString()} lead${total !== 1 ? 's' : ''} total`}
+          </p>
         </div>
-        <p className="text-muted-foreground mt-1">
-          {loading && leads.length === 0
-            ? 'Loading...'
-            : `${total.toLocaleString()} lead${total !== 1 ? 's' : ''} total`}
-        </p>
       </StaggerItem>
 
       {/* Filters bar */}

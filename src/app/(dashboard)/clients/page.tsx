@@ -44,17 +44,21 @@ export default function ClientsPage() {
   return (
     <StaggerContainer className="space-y-6">
       <StaggerItem>
-        <div className="flex items-baseline gap-3">
-          <h1 className="text-3xl font-bold tracking-tight page-header-accent">Clients</h1>
-          {!loading && (
-            <span className="text-2xl font-bold text-primary tabular-nums">
-              <AnimatedCounter value={clients.length} className="" />
-            </span>
-          )}
+        <div className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#0d0d0d] via-[#111] to-[#0d0d0d] px-6 py-5">
+          <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-[#9b51e0]/[0.05] blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-12 -left-12 w-36 h-36 rounded-full bg-primary/[0.04] blur-3xl pointer-events-none" />
+          <div className="relative flex items-baseline gap-3">
+            <h1 className="text-3xl font-bold tracking-tight">Clients</h1>
+            {!loading && (
+              <span className="text-2xl font-bold text-primary tabular-nums">
+                <AnimatedCounter value={clients.length} className="" />
+              </span>
+            )}
+          </div>
+          <p className="text-muted-foreground mt-1 relative">
+            {loading ? 'Loading...' : `${clients.length} active clients`}
+          </p>
         </div>
-        <p className="text-muted-foreground mt-1">
-          {loading ? 'Loading...' : `${clients.length} clients`}
-        </p>
       </StaggerItem>
 
       <StaggerItem>
