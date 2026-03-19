@@ -51,7 +51,7 @@ function timeAgo(dateStr: string): string {
 }
 
 export default function DashboardPage() {
-  const [preset, setPreset] = useState<Preset>('30d')
+  const [preset, setPreset] = useState<Preset>('all')
 
   const { from, to } = useMemo(() => getDateRange(preset), [preset])
 
