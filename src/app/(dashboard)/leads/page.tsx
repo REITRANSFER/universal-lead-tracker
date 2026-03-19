@@ -2,12 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useQueryStates } from 'nuqs'
+import { Inbox } from 'lucide-react'
 import { filterParams } from '@/lib/filter-params'
 import { useLeads } from '@/hooks/use-leads'
 import { LeadsFilters } from '@/components/leads/leads-filters'
 import { LeadsTable } from '@/components/leads/leads-table'
 import { LeadDrawer } from '@/components/leads/lead-drawer'
 import { StaggerContainer, StaggerItem } from '@/components/ui/stagger-wrapper'
+import { AnimatedCounter } from '@/components/ui/animated-counter'
 import type { Lead } from '@/components/leads/columns'
 
 export default function LeadsPage() {
@@ -138,18 +140,25 @@ export default function LeadsPage() {
     [leads, handleToggleFlag]
   )
 
+  const isEmpty = !loading && leads.length === 0
+
   return (
     <StaggerContainer className="space-y-6">
       {/* Page header */}
       <StaggerItem>
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Leads</h1>
-          <p className="text-muted-foreground mt-1">
-            {loading && leads.length === 0
-              ? 'Loading...'
-              : `${total.toLocaleString()} lead${total !== 1 ? 's' : ''} total`}
-          </p>
+        <div className="flex items-baseline gap-3">
+          <h1 className="text-3xl font-bold tracking-tight page-header-accent">Leads</h1>
+          {!loading && total > 0 && (
+            <span className="text-2xl font-bold text-primary tabular-nums">
+              <AnimatedCounter value={total} className="" />
+            </span>
+          )}
         </div>
+        <p className="text-muted-foreground mt-1">
+          {loading && leads.length === 0
+            ? 'Loading...'
+            : `${total.toLocaleString()} lead${total !== 1 ? 's' : ''} total`}
+        </p>
       </StaggerItem>
 
       {/* Filters bar */}
@@ -157,20 +166,35 @@ export default function LeadsPage() {
         <LeadsFilters />
       </StaggerItem>
 
-      {/* Leads table */}
-      <StaggerItem>
-        <LeadsTable
-          leads={leads}
-          total={total}
-          loading={loading}
-          hasMore={hasMore}
-          onLoadMore={loadMore}
-          onSort={handleSort}
-          onToggleStar={handleToggleStar}
-          onToggleFlag={handleToggleFlag}
-          onRowClick={handleRowClick}
-        />
-      </StaggerItem>
+      {/* Empty state */}
+      {isEmpty ? (
+        <StaggerItem>
+          <div className="glass-card section-glow rounded-xl p-12 flex flex-col items-center justify-center text-center">
+            <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
+              <Inbox className="w-8 h-8 text-muted-foreground" />
+            </div>
+            <p className="text-lg font-medium text-muted-foreground">No leads yet</p>
+            <p className="text-sm text-muted-foreground/60 mt-1 max-w-xs">
+              Leads will appear here as they flow in from your survey forms and integrations.
+            </p>
+          </div>
+        </StaggerItem>
+      ) : (
+        /* Leads table */
+        <StaggerItem>
+          <LeadsTable
+            leads={leads}
+            total={total}
+            loading={loading}
+            hasMore={hasMore}
+            onLoadMore={loadMore}
+            onSort={handleSort}
+            onToggleStar={handleToggleStar}
+            onToggleFlag={handleToggleFlag}
+            onRowClick={handleRowClick}
+          />
+        </StaggerItem>
+      )}
 
       {/* Lead detail drawer */}
       <LeadDrawer

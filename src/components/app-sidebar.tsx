@@ -44,12 +44,20 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="p-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary glow-red-sm">
-            <TrendingUp className="h-4 w-4 text-primary-foreground" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://reitransfer.com/wp-content/uploads/2024/09/reitransfer-logo_square.png"
+            alt="REI Transfer"
+            className="h-8 w-8 shrink-0 rounded-lg glow-red-sm"
+          />
+          <div className="flex flex-col group-data-[collapsible=icon]:hidden">
+            <span className="text-sm font-semibold tracking-tight bg-gradient-to-r from-[#0693e3] to-[#9b51e0] bg-clip-text text-transparent">
+              REI Transfer
+            </span>
+            <span className="text-[10px] text-muted-foreground leading-tight">
+              Lead Tracker
+            </span>
           </div>
-          <span className="text-sm font-semibold tracking-tight group-data-[collapsible=icon]:hidden">
-            Lead Tracker
-          </span>
         </div>
       </SidebarHeader>
 

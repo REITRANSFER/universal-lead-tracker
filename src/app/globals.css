@@ -206,3 +206,138 @@
   backdrop-filter: blur(4px) !important;
   -webkit-backdrop-filter: blur(4px) !important;
 }
+
+/* ─── Premium UI Animations ─── */
+
+@keyframes gradient-shift {
+  0% { --gradient-angle: 0deg; }
+  100% { --gradient-angle: 360deg; }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.4); }
+}
+
+@keyframes slide-in-right {
+  0% { opacity: 0; transform: translateX(20px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes accent-underline {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+@keyframes progress-fill {
+  0% { width: 0; }
+}
+
+/* Gradient border — animated conic sweep */
+.gradient-border {
+  position: relative;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--gradient-angle, 0deg),
+    #e41c25, #ff8b1a, transparent 40%, transparent 60%, #e41c25
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  animation: gradient-shift 8s linear infinite;
+  pointer-events: none;
+}
+.gradient-border:hover::before {
+  opacity: 1;
+}
+
+/* Live pulsing dot */
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00c758;
+  animation: pulse-dot 2s ease-in-out infinite;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Subtle grid background pattern */
+.grid-pattern {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.02) 0px,
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px,
+      transparent 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.02) 0px,
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px,
+      transparent 40px
+    );
+}
+
+/* Enhanced stat card hover */
+.stat-card-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.stat-card-hover:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 30px rgba(228, 28, 37, 0.12), 0 2px 12px rgba(0, 0, 0, 0.3);
+  border-color: rgba(228, 28, 37, 0.3);
+}
+
+/* Page header red accent underline */
+.page-header-accent {
+  position: relative;
+  display: inline-block;
+}
+.page-header-accent::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #e41c25, rgba(228, 28, 37, 0.2));
+  border-radius: 1px;
+  animation: accent-underline 0.8s ease-out forwards;
+  width: 0;
+}
+
+/* Row glow on hover */
+.row-glow {
+  border-left: 2px solid transparent;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+.row-glow:hover {
+  border-left-color: #e41c25;
+  background-color: rgba(228, 28, 37, 0.03);
+}
+
+/* Animated progress bar fill */
+.progress-bar-animated {
+  animation: progress-fill 0.8s ease-out forwards;
+  background: linear-gradient(90deg, #e41c25, #ff8b1a);
+}
+
+/* Slide in animation for activity rows */
+.slide-in-right {
+  animation: slide-in-right 0.3s ease-out forwards;
+}
+
+/* Rank badge colors */
+.rank-gold { color: #fcbb00; }
+.rank-silver { color: #a8a8a8; }
+.rank-bronze { color: #cd7f32; }
