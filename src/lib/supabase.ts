@@ -28,3 +28,37 @@ export async function supabaseRest(
     },
   })
 }
+
+/**
+ * Fetch ALL rows from a Supabase table, paginating through the 1000-row default limit.
+ * Returns the combined array of all rows.
+ */
+export async function supabaseRestAll<T = Record<string, unknown>>(
+  path: string,
+  pageSize = 1000
+): Promise<T[]> {
+  const all: T[] = []
+  let offset = 0
+
+  while (true) {
+    const res = await supabaseRest(path, {
+      headers: {
+        Prefer: 'count=exact',
+        Range: `${offset}-${offset + pageSize - 1}`,
+      },
+    })
+
+    if (!res.ok) {
+      throw new Error(`Supabase error ${res.status}: ${await res.text()}`)
+    }
+
+    const rows: T[] = await res.json()
+    all.push(...rows)
+
+    // If we got fewer rows than the page size, we've reached the end
+    if (rows.length < pageSize) break
+    offset += pageSize
+  }
+
+  return all
+}

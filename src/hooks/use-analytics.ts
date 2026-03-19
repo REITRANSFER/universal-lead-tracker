@@ -15,6 +15,17 @@ export interface DuplicateRate {
   rate: number
 }
 
+export interface LeadVolumePoint {
+  date: string
+  count: number
+}
+
+export interface ClientBreakdown {
+  client_slug: string
+  count: number
+  pct: number
+}
+
 export interface AnalyticsData {
   utm_source: UtmCount[]
   utm_medium: UtmCount[]
@@ -22,6 +33,9 @@ export interface AnalyticsData {
   duplicate_rates: DuplicateRate[]
   total_leads: number
   total_duplicates: number
+  lead_volume: LeadVolumePoint[]
+  client_breakdown: ClientBreakdown[]
+  leads_with_utm: number
 }
 
 interface UseAnalyticsParams {

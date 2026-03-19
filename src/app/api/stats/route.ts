@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { requireAuth } from '@/lib/require-auth'
-import { supabaseRest } from '@/lib/supabase'
+import { supabaseRestAll } from '@/lib/supabase'
 
 interface LeadRow {
   client_slug: string
@@ -61,21 +61,17 @@ export async function GET(req: Request) {
     params.set('received_at', `lte.${to}`)
   }
 
-  // Fetch all rows for the period (no pagination — just the two lightweight fields)
-  const res = await supabaseRest(`/rest/v1/leads?${params.toString()}`, {
-    headers: { Prefer: 'count=exact' },
-  })
-
-  if (!res.ok) {
-    const body = await res.text()
-    console.error('[/api/stats] Supabase error:', res.status, body)
+  // Fetch ALL rows for the period (paginated to avoid 1000-row cap)
+  let rows: LeadRow[]
+  try {
+    rows = await supabaseRestAll<LeadRow>(`/rest/v1/leads?${params.toString()}`)
+  } catch (err) {
+    console.error('[/api/stats] Supabase error:', err)
     return NextResponse.json(
-      { error: 'Failed to fetch stats', detail: body },
+      { error: 'Failed to fetch stats', detail: String(err) },
       { status: 502 }
     )
   }
-
-  const rows: LeadRow[] = await res.json()
 
   // -------------------------------------------------------------------
   // Compute client counts (including duplicate tracking)
