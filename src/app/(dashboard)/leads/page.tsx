@@ -7,6 +7,7 @@ import { useLeads } from '@/hooks/use-leads'
 import { LeadsFilters } from '@/components/leads/leads-filters'
 import { LeadsTable } from '@/components/leads/leads-table'
 import { LeadDrawer } from '@/components/leads/lead-drawer'
+import { StaggerContainer, StaggerItem } from '@/components/ui/stagger-wrapper'
 import type { Lead } from '@/components/leads/columns'
 
 export default function LeadsPage() {
@@ -138,32 +139,38 @@ export default function LeadsPage() {
   )
 
   return (
-    <div className="space-y-6">
+    <StaggerContainer className="space-y-6">
       {/* Page header */}
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Leads</h1>
-        <p className="text-muted-foreground mt-1">
-          {loading && leads.length === 0
-            ? 'Loading...'
-            : `${total.toLocaleString()} lead${total !== 1 ? 's' : ''} total`}
-        </p>
-      </div>
+      <StaggerItem>
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Leads</h1>
+          <p className="text-muted-foreground mt-1">
+            {loading && leads.length === 0
+              ? 'Loading...'
+              : `${total.toLocaleString()} lead${total !== 1 ? 's' : ''} total`}
+          </p>
+        </div>
+      </StaggerItem>
 
       {/* Filters bar */}
-      <LeadsFilters />
+      <StaggerItem>
+        <LeadsFilters />
+      </StaggerItem>
 
       {/* Leads table */}
-      <LeadsTable
-        leads={leads}
-        total={total}
-        loading={loading}
-        hasMore={hasMore}
-        onLoadMore={loadMore}
-        onSort={handleSort}
-        onToggleStar={handleToggleStar}
-        onToggleFlag={handleToggleFlag}
-        onRowClick={handleRowClick}
-      />
+      <StaggerItem>
+        <LeadsTable
+          leads={leads}
+          total={total}
+          loading={loading}
+          hasMore={hasMore}
+          onLoadMore={loadMore}
+          onSort={handleSort}
+          onToggleStar={handleToggleStar}
+          onToggleFlag={handleToggleFlag}
+          onRowClick={handleRowClick}
+        />
+      </StaggerItem>
 
       {/* Lead detail drawer */}
       <LeadDrawer
@@ -178,6 +185,6 @@ export default function LeadsPage() {
         onToggleStar={handleDrawerToggleStar}
         onToggleFlag={handleDrawerToggleFlag}
       />
-    </div>
+    </StaggerContainer>
   )
 }

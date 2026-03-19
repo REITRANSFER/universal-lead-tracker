@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { Trophy } from 'lucide-react'
 import type { StatsData } from '@/hooks/use-stats'
+import { AnimatedCounter } from '@/components/ui/animated-counter'
+import { Sparkles } from '@/components/ui/sparkle'
 
 function getDupRateColor(rate: number): string {
   if (rate < 5) return 'text-green-400'
@@ -38,13 +40,14 @@ export function StatsBar({ data, loading }: StatsBarProps) {
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
       {/* Card 1: Total Leads */}
-      <div className="glass-card rounded-xl p-6">
+      <div className="glass-card section-glow rounded-xl p-6 relative overflow-hidden">
+        <Sparkles count={4} />
         <p className="text-sm font-medium text-muted-foreground">Total Leads</p>
         {loading ? (
           <Skeleton className="mt-2 h-12 w-28" />
         ) : (
-          <p className="mt-2 text-5xl font-bold tracking-tight">
-            {totalLeads.toLocaleString()}
+          <p className="mt-2">
+            <AnimatedCounter value={totalLeads} className="text-5xl font-bold tabular-nums tracking-tight" />
           </p>
         )}
         <p className="mt-1 text-xs text-muted-foreground">
@@ -58,9 +61,9 @@ export function StatsBar({ data, loading }: StatsBarProps) {
       </div>
 
       {/* Card 2: Top Performer */}
-      <div className="glass-card rounded-xl p-6">
+      <div className="glass-card section-glow rounded-xl p-6">
         <div className="flex items-center gap-2">
-          <Trophy className="h-4 w-4 text-yellow-400" />
+          <Trophy className="h-4 w-4 text-yellow-400 trophy-wiggle" />
           <p className="text-sm font-medium text-muted-foreground">
             Top Performer
           </p>
@@ -76,7 +79,7 @@ export function StatsBar({ data, loading }: StatsBarProps) {
               {topPerformer.client_slug}
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
-              {topPerformer.count.toLocaleString()} leads
+              <AnimatedCounter value={topPerformer.count} className="tabular-nums" /> leads
             </p>
           </>
         ) : (
@@ -85,7 +88,7 @@ export function StatsBar({ data, loading }: StatsBarProps) {
       </div>
 
       {/* Card 3: Leaderboard */}
-      <div className="glass-card rounded-xl p-6">
+      <div className="glass-card section-glow rounded-xl p-6">
         <p className="text-sm font-medium text-muted-foreground mb-3">
           Leaderboard
         </p>
@@ -116,7 +119,7 @@ export function StatsBar({ data, loading }: StatsBarProps) {
                     </div>
                     <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
                       <div
-                        className="h-full rounded-full bg-red-500"
+                        className="h-full rounded-full bg-red-500 transition-all duration-500"
                         style={{ width: `${(client.count / maxCount) * 100}%` }}
                       />
                     </div>

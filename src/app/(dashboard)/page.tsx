@@ -5,6 +5,8 @@ import { useStats } from '@/hooks/use-stats'
 import { useClients } from '@/hooks/use-clients'
 import { StatsBar } from '@/components/dashboard/stats-bar'
 import { HealthHeatmap } from '@/components/dashboard/health-heatmap'
+import { StaggerContainer, StaggerItem } from '@/components/ui/stagger-wrapper'
+import { FloatingOrbs } from '@/components/ui/floating-orbs'
 
 type Preset = '7d' | '30d' | '90d' | 'all'
 
@@ -36,30 +38,39 @@ export default function DashboardPage() {
   const { clients } = useClients()
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-        {/* Date preset buttons */}
-        <div className="flex items-center gap-1 rounded-lg border border-white/10 p-1 bg-white/5 w-fit">
-          {PRESETS.map((p) => (
-            <button
-              key={p.value}
-              onClick={() => setPreset(p.value)}
-              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                preset === p.value
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
-              }`}
-            >
-              {p.label}
-            </button>
-          ))}
-        </div>
-      </div>
+    <div className="space-y-6 relative">
+      <FloatingOrbs />
 
-      <StatsBar data={data} loading={loading} />
+      <StaggerContainer className="space-y-6">
+        <StaggerItem>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+            <div className="flex items-center gap-1 rounded-full border border-white/10 p-1 bg-white/5 w-fit">
+              {PRESETS.map((p) => (
+                <button
+                  key={p.value}
+                  onClick={() => setPreset(p.value)}
+                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                    preset === p.value
+                      ? 'bg-primary text-primary-foreground btn-glow'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
+                  }`}
+                >
+                  {p.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </StaggerItem>
 
-      <HealthHeatmap data={data} loading={loading} from={from} to={to} allClients={clients} />
+        <StaggerItem>
+          <StatsBar data={data} loading={loading} />
+        </StaggerItem>
+
+        <StaggerItem>
+          <HealthHeatmap data={data} loading={loading} from={from} to={to} allClients={clients} />
+        </StaggerItem>
+      </StaggerContainer>
     </div>
   )
 }
