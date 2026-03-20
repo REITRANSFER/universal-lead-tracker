@@ -9,6 +9,7 @@ import { UtmTable } from '@/components/analytics/utm-table'
 import { DuplicateRateSection } from '@/components/analytics/duplicate-rate-section'
 import { AnimatedCounter } from '@/components/ui/animated-counter'
 import { StaggerContainer, StaggerItem } from '@/components/ui/stagger-wrapper'
+import { AdSpendSection } from '@/components/analytics/ad-spend-table'
 import { TrendingUp, Users, AlertTriangle, BarChart2 } from 'lucide-react'
 
 export default function AnalyticsPage() {
@@ -187,6 +188,11 @@ export default function AnalyticsPage() {
           </div>
         </StaggerItem>
       )}
+
+      {/* Facebook Ad Spend Section */}
+      <StaggerItem>
+        <AdSpendSection />
+      </StaggerItem>
     </StaggerContainer>
   )
 }
